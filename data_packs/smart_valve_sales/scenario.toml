@@ -1,0 +1,19 @@
+scenario_id = "smart_valve_sales"
+display_name = "智能阀知识助手"
+industry = "暖通与楼宇自控"
+description = "面向销售和客服人员的智能阀产品说明、型号参数和方案资料检索应用。"
+assistant_name = "智能阀知识助手"
+business_domain = "智能阀产品介绍、初步选型、系统集成与销售和客服知识支持"
+support_contact = "售前技术支持"
+faq_collection = "smart_valve_faq_hybrid_v1"
+doc_collection = "smart_valve_doc_hybrid_v1"
+data_root = "data_packs/smart_valve_sales"
+faq_csv_path = "data_packs/smart_valve_sales/faq/faq.csv"
+valid_sources = ["product"]
+sample_questions = []
+
+[source_labels]
+product = "智能阀产品资料"
+
+[source_patterns]
+product = "智能阀|EVG|EVF|VPF|VQP|VQI|PICV|Kvs|DN|BACnet|Modbus"

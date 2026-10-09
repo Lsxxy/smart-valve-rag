@@ -1,0 +1,46 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+fastapi==0.135.3
+uvicorn[standard]==0.42.0
+pydantic-settings==2.14.0
+tomli==2.2.1
+langchain==1.2.13
+langchain-core==1.2.31
+langchain-community==0.4.1
+langchain-openai==1.1.12
+langsmith==0.7.25
+langchain-huggingface==1.2.2
+langchain-milvus==0.2.2
+langchain-text-splitters==1.1.1
+jieba==0.42.1
+pymilvus[model]==2.5.18
+pymilvus-model==0.3.0
+protobuf==5.29.5
+ujson==5.12.1
+sentence-transformers==4.1.0
+transformers==4.57.6
+safetensors==0.7.0
+accelerate==1.14.0
+sentencepiece==0.2.0
+torch==2.7.1+cpu; sys_platform == "linux" and platform_machine == "x86_64"
+torch==2.7.1; sys_platform != "linux" or platform_machine != "x86_64"
+# ARM64 Linux wheel 使用无 +cpu 后缀的同版本包；x86 CPU 环境同样可解析。
+torchvision==0.22.1
+SQLAlchemy==2.0.30
+PyMySQL==1.1.1
+cryptography==46.0.4
+redis==5.2.1
+numpy==1.26.4
+pandas==2.2.2
+openpyxl==3.1.5
+xlrd==2.0.2
+PyMuPDF==1.26.7
+pypdf==6.9.2
+python-docx==1.1.2
+python-pptx==1.0.2
+docling==2.106.0
+paddleocr==2.9.1
+python-multipart==0.0.20
+ragas==0.3.6
+websocket-client==1.8.0
+websockets==15.0.1

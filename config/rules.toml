@@ -1,0 +1,85 @@
+# 入口路由、查询变体和动态检索计划的默认规则。
+#
+# 这些数值是项目的初始校准值，不是通用生产标准；调整后应重新运行
+# scripts/intent/evaluate_intent_policy.py 和检索相关测试。
+
+[faq_fast_path]
+# 只为短而完整的标准问法做 FAQ 精确探测，避免复杂问题过早绕过文档检索。
+max_chars = 48
+hints = [
+  "怎么",
+  "如何",
+  "怎么办",
+  "需要",
+  "可以吗",
+  "流程",
+  "材料",
+  "审批",
+  "报销",
+  "发票",
+  "开票",
+  "退款",
+  "密码",
+  "VPN",
+  "限流",
+]
+
+[query_variants]
+# 足够短、且已具有明确问句形态的问题不调用 LLM 生成变体，减少无收益扩展。
+short_structured_max_chars = 24
+short_structured_markers = [
+  "怎么走",
+  "资料",
+  "材料",
+  "怎么排查",
+  "怎么处理",
+  "需要哪些",
+  "能不能",
+  "可以吗",
+  "是什么",
+  "要看什么",
+]
+
+[[query_variants.replacements]]
+when_any = ["流程"]
+replace = [
+  ["流程", "SOP"],
+  ["流程", "处理步骤"],
+  ["流程", "办理流程"],
+]
+
+[[query_variants.replacements]]
+when_any = ["webhook"]
+ignore_case = true
+replace = [
+  ["webhook", "回调"],
+  ["webhook", "Webhook 回调"],
+]
+
+[intent_rule_scores]
+# 规则候选分，不是模型概率。严格递增的顺序由加载器校验。
+strong_faq = 0.82
+knowledge = 0.84
+source_question_shape = 0.85
+direct_faq_shape = 0.86
+
+[retrieval_strategy]
+# FAQ_QUERY 可以比默认 0.72 稍低地尝试相似 FAQ 直出，但绝不低于 0.64。
+faq_direct_floor = 0.64
+faq_direct_discount = 0.08
+
+# 短问题、意图不稳定和高风险问题依次提高 FAQ 直出门槛。
+short_query_guard_threshold = 0.78
+low_rule_score_threshold = 0.70
+medium_rule_score_threshold = 0.82
+medium_rule_score_direct_threshold = 0.82
+pricing_direct_threshold = 0.84
+compliance_direct_threshold = 0.86
+low_rule_score_direct_threshold = 0.86
+
+# 召回和上下文下限：默认 FAQ/文档 top_k 为 20，复杂文档查询为 24。
+follow_up_faq_top_k_min = 24
+strong_faq_doc_top_k_min = 10
+knowledge_context_top_n_min = 5
+guard_context_top_n_min = 6
+table_context_top_n_min = 7
